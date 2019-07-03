@@ -3,8 +3,9 @@ import json
 import requests
 
 class querycensys():
-	def __init__ (self,target):
+	def __init__ (self,target,file):
 		self.target=target
+		self.file=file
 	def main(self):
 
 		API_URL = "https://censys.io/api/v1/search/ipv4"
@@ -26,7 +27,7 @@ class querycensys():
 	# print(result)
 		for ip in result['results']:
 			print("%s" %ip['ip'])
-		with open('ip.txt',mode='a') as f:
+		with open(self.file,mode='a') as f:
 			for ip in result['results']:
 				f.writelines(ip['ip']+'\n')
 
@@ -34,5 +35,5 @@ class querycensys():
 	# for name, series in res.json()["raw_series"].iteritems():
 	# 	print (series["name"], "was last updated at", series["latest_result"]["timestamp"])
 if __name__ == '__main__':
-	a=querycensys(sys.argv[1])
+	a=querycensys(sys.argv[1],sys.argv[2])
 	a.main()
